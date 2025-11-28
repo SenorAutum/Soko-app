@@ -2,7 +2,8 @@
 
 > **Empowering communities to trade surplus solar energy using local payment rails.**
 
-![SOKO Banner](Soko-app/client/public/logo.png)
+![SOKO Banner](/client/public/logo.png)
+Deployment link; https://soko-energy.netlify.app/
 
 ## 🎯 The Mission
 In many African communities, energy access is unreliable, yet solar owners often have surplus power they cannot monetize. **SOKO** bridges this gap by creating a decentralized marketplace where:
