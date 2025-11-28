@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios';
-import { motion, AnimatePresence } from 'framer-motion'; // Animation Library
+import { motion, AnimatePresence } from 'framer-motion';
 import './index.css';
 
 const App = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [filter, setFilter] = useState('ALL'); // New Filter State
+  const [filter, setFilter] = useState('ALL');
   const [receipt, setReceipt] = useState(null);
+  
+  // LIVE STATS STATE
+  const [co2, setCo2] = useState(1240);
+  const [activeUsers, setActiveUsers] = useState(312);
 
   useEffect(() => {
     fetchListings();
+    
+    // THE PULSE EFFECT: Simulate live data changes
+    const interval = setInterval(() => {
+      setCo2(prev => prev + 1); // CO2 saved always goes up
+      setActiveUsers(prev => prev + (Math.random() > 0.5 ? 1 : -1)); // Users fluctuate
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const fetchListings = async () => {
@@ -40,9 +51,7 @@ const App = () => {
   };
 
   const handleBuy = (item) => {
-    // 1. Vibration feedback (if supported) for realism
     if (navigator.vibrate) navigator.vibrate(50);
-    
     setReceipt({
       id: "TXN-" + Math.floor(Math.random() * 100000),
       item: item.name,
@@ -52,7 +61,6 @@ const App = () => {
     });
   };
 
-  // Filter Logic
   const filteredListings = listings.filter(item => {
     if (filter === 'ALL') return true;
     if (filter === 'SOLAR') return item.type === 'SOLAR';
@@ -68,6 +76,19 @@ const App = () => {
           <h1>SOKO</h1>
         </div>
         <p>Peer-to-Peer Energy Marketplace</p>
+
+        {/* NEW: LIVE STATS DASHBOARD */}
+        <div className="stats-dashboard">
+          <div className="stat-item">
+            <span className="stat-label">🌍 CO2 Offset</span>
+            <span className="stat-value">{co2.toLocaleString()} kg</span>
+          </div>
+          <div className="stat-divider">|</div>
+          <div className="stat-item">
+            <span className="stat-label">🟢 Active Nodes</span>
+            <span className="stat-value">{activeUsers}</span>
+          </div>
+        </div>
       </header>
 
       <div className="filter-bar">
@@ -98,7 +119,11 @@ const App = () => {
               >
                 <div className="tag">{item.type}</div>
                 <div className="icon">{item.type === 'SOLAR' ? '☀️' : item.type === 'GRID' ? '⚡' : '🌱'}</div>
-                <h3>{item.name}</h3>
+                <h3>
+                  {item.name} 
+                  {/* VERIFIED BADGE */}
+                  <span className="verified" title="Verified Producer">✓</span>
+                </h3>
                 <p className="kwh">{item.kwh} kWh available</p>
                 <div className="price-tag">{item.price} KES <span className="unit">/unit</span></div>
                 <button onClick={() => handleBuy(item)} className="buy-btn">Buy Now</button>
@@ -108,7 +133,6 @@ const App = () => {
         </motion.div>
       </main>
 
-      {/* --- MOVED TO BOTTOM FOR HIGHER PRIORITY --- */}
       <AnimatePresence>
         {receipt && (
           <motion.div 
@@ -131,7 +155,6 @@ const App = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      
     </div>
   );
 };

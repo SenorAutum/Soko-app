@@ -77,3 +77,36 @@ header p { color: #888; letter-spacing: 1px; text-transform: uppercase; font-siz
 .row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95rem; }
 .row.small { font-size: 0.75rem; color: #888; margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 10px; }
 .close-btn { background: #121212; color: #fff; width: 100%; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; }
+/* LIVE DASHBOARD STATS */
+.stats-dashboard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #333;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 25px;
+  border-radius: 30px;
+  margin-top: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.stat-item { display: flex; flex-direction: column; align-items: center; }
+.stat-label { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+.stat-value { font-size: 1.2rem; font-weight: bold; color: #4CAF50; font-family: monospace; }
+.stat-divider { color: #333; font-size: 1.5rem; font-weight: 100; }
+
+/* VERIFIED BADGE */
+.verified {
+  display: inline-block;
+  background: #1DA1F2; /* Twitter Blue style or use SOKO Gold #D4AF37 */
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  margin-left: 8px;
+  vertical-align: middle;
+  cursor: help;
+}
